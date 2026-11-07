@@ -1,4 +1,4 @@
-name: CI
+name: oracle
 
 on:
   push:
@@ -9,14 +9,16 @@ permissions:
   contents: read
 
 jobs:
-  test:
-    name: clojure -M:datomic:test (JDK ${{ matrix.java }})
+  oracle-test:
+    name: oracle (reference only) — clojure -M:datomic:test (JDK ${{ matrix.java }})
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         java: ['17', '21']
     steps:
+      - name: oracle notice
+        run: echo "ORACLE job - reference measurement only, not a gate, not a required check, no native build or gate depends on it (AGENTS.md CI exception, JUN-579)."
       - uses: actions/checkout@v4
 
       - name: Setup JDK ${{ matrix.java }}
