@@ -1,0 +1,47 @@
+(ns sip.xrpc
+  "Portable XRPC calls over a host-injected `kotoba.lang.http/IHttp`.
+
+  No HTTP client is baked in: the host passes `client` (any IHttp). The JVM
+  `java.net.http` clients in `sip.store` and `sip.research` can be replaced by
+  one transport adapter, and a test passes `kotoba.lang.http/mock-http`.
+  A remote call is an external operation, so the caller (not this ns) decides
+  when to make one."
+  (:require [kotoba.lang.http :as http]))
+
+(defn- auth-headers
+  "`Authorization: Bearer` when `token` is present; `block.get` needs none, so
+  the header is harmless there."
+  [token]
+  (when (and token (seq token))
+    {"authorization" (str "Bearer " token)}))
+
+(defn- ok? [resp]
+  (<= 200 (:http/status resp 0) 299))
+
+(defn- keywordize
+  "Keyword every map key, as the old `:key-fn keyword` JVM decoder did."
+  [x]
+  (cond (map? x) (into {} (map (fn [[k v]] [(if (string? k) (keyword k) k) (keywordize v)])) x)
+        (sequential? x) (mapv keywordize x)
+        :else x))
+
+(defn- decoded [resp] (keywordize (http/decode-json-body resp)))
+
+(defn post-json
+  "POST `body-map` as JSON. The decoded body of a 2xx response, else nil."
+  [client url body-map token]
+  (let [resp (http/send client (http/request-json :post url body-map {:headers (auth-headers token)}))]
+    (when (ok? resp)
+      (decoded resp))))
+
+(defn get-json
+  "GET `url`. The decoded body of a 2xx response, else nil."
+  [client url token]
+  (let [resp (http/send client (http/request :get url {:headers (auth-headers token)}))]
+    (when (ok? resp)
+      (decoded resp))))
+
+(defn xrpc-post
+  "POST to `<base>/xrpc/<nsid>`."
+  [client base nsid body-map token]
+  (post-json client (str base "/xrpc/" nsid) body-map token))

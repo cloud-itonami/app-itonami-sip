@@ -23,9 +23,15 @@ Measured 2026-11-07 (`kbb`, Node v26.0.0), one `(:require [sip.<ns>])` per names
 
 | loads under kbb | does not load, and why |
 |---|---|
-| assets, bible, lore, session, storyboard | `page` (java.awt.Color), `render` / `research` / `store` / `world` (java.net.http.HttpClient), `preview` (datalevin), `kotoba` / `researcher` / `ui` (cljs.core.async, browser), `schema` / `systems` / `web` (kami.scene / kami.sim from the engine SDK) |
+| assets, bible, lore, session, storyboard, xrpc (new) | `page` (java.awt.Color), `render` / `research` / `store` / `world` (java.net.http.HttpClient), `preview` (datalevin), `kotoba` / `researcher` / `ui` (cljs.core.async, browser), `schema` / `systems` / `web` (kami.scene / kami.sim from the engine SDK) |
 
-So `sip.session-test` (5 tests, 13 assertions) is the only suite that runs under kbb today.
+`sip.xrpc` (added 2026-11-07) is the portable XRPC core over a host-injected
+`kotoba.lang.http/IHttp`; `sip.xrpc-test` runs it over `mock-http`. `sip.store` and
+`sip.research` still use their own `java.net.http` clients; moving them onto `sip.xrpc` with
+one JVM transport adapter is the next step, and needs a JVM run that can load `.cljk` first
+(see the dependency `.cljc` problem, JUN-967 to JUN-969).
+
+Under kbb today: `sip.session-test` (5 tests, 13 assertions) and `sip.xrpc-test` (3 tests, 9 assertions).
 `research-test` (JVM `HttpServer`), `store-test` (datalevin) and `render-test` (private
 story-bible checkout) are JVM-only. Making the rest portable means replacing the JVM HTTP client,
 AWT and datalevin uses, or declaring each module's host with standard reader conditionals.

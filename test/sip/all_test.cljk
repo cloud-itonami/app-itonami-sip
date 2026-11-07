@@ -3,9 +3,10 @@
   datalevin store (sip.store-test) and no private story-bible checkout
   (sip.render-test)."
   (:require [kotoba.test :refer [run-tests]]
-            [sip.session-test]))
+            [sip.session-test]
+            [sip.xrpc-test]))
 
 (defn -main [& _]
-  (let [result (run-tests 'sip.session-test)]
+  (let [result (run-tests 'sip.session-test 'sip.xrpc-test)]
     (when (pos? (+ (:fail result) (:error result)))
       (System/exit 1))))
