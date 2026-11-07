@@ -1,4 +1,4 @@
-;; Spirit in Physics — https://sip.etzhayyim.com
+;; Spirit in Physics — https://sip.itonami.app
 ;; A cozy slow-life healing game. clj is the brain; Datomic/datalevin is the
 ;; world; Kotoba is the content-addressed durable + distributed layer; the GPU
 ;; work stays on kami-render (Rust/wgpu) via kami-engine-sdk's render-IR.

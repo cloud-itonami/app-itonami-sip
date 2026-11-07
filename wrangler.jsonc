@@ -1,5 +1,5 @@
 {
-  // Spirit in Physics — https://sip.etzhayyim.com
+  // Spirit in Physics — https://sip.itonami.app
   // Static assets (the cljs bundle + wasm host + snapshot) served from Cloudflare.
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "sip",
@@ -17,7 +17,7 @@
     { "type": "CompiledWasm", "globs": ["**/*.wasm"] }
   ],
   "routes": [
-    { "pattern": "sip.etzhayyim.com/*", "zone_name": "etzhayyim.com" }
+    { "pattern": "sip.itonami.app/*", "zone_name": "itonami.app" }
   ],
   // assets-only Worker (no script) — a binding is only for a Worker that reads
   // assets in code, which this static site has none of.

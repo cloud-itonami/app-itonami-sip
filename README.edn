@@ -1,7 +1,8 @@
-{:repo/id "kotoba-lang/kami-app-sip"
+{:repo/id "cloud-itonami/app-itonami-sip"
  :repo/plane :family
  :repo/family "kami"
  :repo/role :game-application
  :repo/canonical-engine "kotoba-lang/kami-engine"
  :repo/compatibility-surfaces ["https://sip.etzhayyim.com"
-                               "com.etzhayyim.*"]}
+                               "com.etzhayyim.*"]
+ :repo/serving-host "https://sip.itonami.app"}

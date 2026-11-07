@@ -1,10 +1,12 @@
 # Spirit in Physics
 
-**Repository**: `kotoba-lang/kami-app-sip`
+**Repository**: `cloud-itonami/app-itonami-sip` (moved from `kotoba-lang/kami-app-sip`)
 
 This repository owns the SIP game application built on the Kami Engine family.
-The `sip.etzhayyim.com` domain and `com.etzhayyim.*` XRPC namespaces are
-compatibility service identities and are not changed by the repository move.
+The app is served from `sip.itonami.app` (Itonami / Awai Network). The legacy
+`sip.etzhayyim.com` host and the `com.etzhayyim.*` XRPC namespaces remain only as
+wire-compatibility identities of the existing service; the namespaces are not
+renamed here and need a separate decision (JUN-1007).
 
 > Split out of `kotoba-lang/kami-engine`'s `kami-app-sip-clj/` subtree into its
 > own standalone repo (ADR-2607010930), following the same pattern used for
@@ -22,7 +24,7 @@ compatibility service identities and are not changed by the repository move.
 > Nested `kami-engine/kami-mangaka-*-clj` trees are README shims only.
 
 > *水の都の心音 — the heartbeat of the water city*
-> Play at **https://sip.etzhayyim.com**
+> Play at **https://sip.itonami.app**
 
 A **cozy, slow-life healing game** set in water-city Tokyo, 2065. You are a new
 Ghost Hacker apprentice at the **Schwa** office on the canals. You live by the
@@ -50,7 +52,7 @@ content.
 | Durable + distributed | **Kotoba** (content-addressed Datalog) | Cross-device saves & 瓶詞 (bottle-letter) async multiplayer, by CID |
 | Runtime | **ClojureScript** (shadow-cljs) | Browser loop, ambient systems |
 | GPU | **`kami-render`** (Rust/wgpu → WASM) | WebGPU rendering via the render-IR contract |
-| Hosting | **Cloudflare** (`wrangler.jsonc`) | `sip.etzhayyim.com` static assets |
+| Hosting | **Cloudflare** (`wrangler.jsonc`) | `sip.itonami.app` static assets |
 
 ## Layout
 
@@ -87,8 +89,8 @@ kbb -M:shadow release app      # or: amu compile --target wasm32-browser app
 # 4. Provide the GPU host wasm at public/wasm/ (from the engine):
 #    wasm-pack build ../kami-clj-host --target web --features host -d <app>/public/wasm
 
-# 5. Serve / deploy to sip.etzhayyim.com:
-npx wrangler deploy                # Cloudflare; routes sip.etzhayyim.com/* → ./public
+# 5. Serve / deploy to sip.itonami.app:
+npx wrangler deploy                # Cloudflare; routes sip.itonami.app/* → ./public
 ```
 
 ## Status — verified
