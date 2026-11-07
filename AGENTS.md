@@ -35,3 +35,19 @@ Under kbb today: `sip.session-test` (5 tests, 13 assertions) and `sip.xrpc-test`
 `research-test` (JVM `HttpServer`), `store-test` (datalevin) and `render-test` (private
 story-bible checkout) are JVM-only. Making the rest portable means replacing the JVM HTTP client,
 AWT and datalevin uses, or declaring each module's host with standard reader conditionals.
+
+## JVM oracle for `.cljk` (measured 2026-11-07)
+
+The Kotoba monorepo has a JVM loader, `tools/cljk_loader.cljk` (kotoba-lang/kotoba), that exposes
+`.cljk` to the JVM as `.cljc` and quotes the `:kotoba/*` attribute values in `ns`. With it the JVM runs
+these sources (OpenJDK 21.0.1, loader from kotoba @73e3c67):
+
+```
+clojure -Sdeps '{:aliases {:t {:extra-paths ["test"]}}}' -M:datomic:t -i cljk_loader.clj -i run.clj
+```
+
+Result: `sip.session-test` and `sip.xrpc-test` give 8 tests / 22 assertions, 0 failures on the JVM,
+the same as `kbb -M:kbb-test`. `sip.schema`, `sip.systems`, `sip.web` and `sip.preview` stop on
+`kami.scene` / `kami.sim`: the monorepo import `lib/kotoba.kamiEngineSdk` carries only 3 of the SDK's
+sources (fsm, gpu, ipc). The rest exists only in the local `kotoba-lang/kami-engine-sdk` checkout, whose
+GitHub repo is gone.
