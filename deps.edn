@@ -102,6 +102,11 @@
   ;; ----- Pure logic tests (no GPU, no DB): session FSM, kokoro, awakening -----
   ;; sip.store-test needs a real datalevin store -- run the full suite with
   ;; `kbb -M:datomic:test` (sip.store-test's own docstring says so too).
+  ;; kbb runs the .cljk tests (the cognitect runner below cannot read .cljk):
+  ;;   kbb -M:kbb-test
+  :kbb-test  {:extra-paths ["test"]
+              :main-opts   ["-m" "sip.all-test"]}
+
   :test      {:extra-paths ["test"]
               :extra-deps  {io.github.cognitect-labs/test-runner
                             {:git/tag "v0.5.1" :git/sha "dfb30dd6605cb6c0efc275e1df1736f6e90d4d73"}}
