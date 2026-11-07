@@ -133,7 +133,7 @@
 
 (defn -main
   "Build the snapshot and write it where the browser bundle can fetch it
-  (public/snapshot.edn). Title: Spirit in Physics → https://sip.etzhayyim.com"
+  (public/snapshot.edn). Title: Spirit in Physics → https://sip.itonami.app"
   [& [dir]]
   (let [dir (or dir (str (System/getProperty "java.io.tmpdir") "/sip-world"))
         snap (build! dir)
