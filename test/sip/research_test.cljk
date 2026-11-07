@@ -54,13 +54,13 @@
         respond (fn [exch ^String s] (let [b (kbytes/utf8-bytes s)]
                                        (.sendResponseHeaders exch 200 (count b))
                                        (with-open [o (.getResponseBody exch)] (.write o b))))]
-    (.createContext srv "/xrpc/com.etzhayyim.apps.kotoba.datomic.transact"
+    (.createContext srv "/xrpc/org.kotoba-lang.datomic.transact"
       (reify HttpHandler
         (handle [_ e]
           (reset! auth (.getFirst (.getRequestHeaders e) "Authorization"))
           (reset! tx (:tx_edn (json/read-str (slurp (.getRequestBody e)) :key-fn keyword)))
           (respond e (json/write-str {:graph "g" :basis_t "1"})))))
-    (.createContext srv "/xrpc/com.etzhayyim.apps.kotoba.datomic.q"
+    (.createContext srv "/xrpc/org.kotoba-lang.datomic.q"
       (reify HttpHandler
         (handle [_ e]
           (reset! qreq (json/read-str (slurp (.getRequestBody e)) :key-fn keyword))

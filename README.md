@@ -3,10 +3,11 @@
 **Repository**: `cloud-itonami/app-itonami-sip` (moved from `kotoba-lang/kami-app-sip`)
 
 This repository owns the SIP game application built on the Kami Engine family.
-The app is served from `sip.itonami.app` (Itonami / Awai Network). The legacy
-`sip.etzhayyim.com` host and the `com.etzhayyim.*` XRPC namespaces remain only as
-wire-compatibility identities of the existing service; the namespaces are not
-renamed here and need a separate decision (JUN-1007).
+The app is served from `sip.itonami.app` (Itonami / Awai Network). Its XRPC calls use the
+`org.kotoba-lang.*` namespaces (formerly `com.etzhayyim.apps.kotoba.*`), per the etzhayyim
+rename map (JUN-842, owner decision 2026-11-04: no compatibility period, one cut-over). The
+serving host is not decided by that map for this repo (the map would put vanity hosts under
+`awai.network`) and needs an owner decision before the cut-over.
 
 > Split out of `kotoba-lang/kami-engine`'s `kami-app-sip-clj/` subtree into its
 > own standalone repo (ADR-2607010930), following the same pattern used for

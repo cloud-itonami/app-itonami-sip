@@ -158,7 +158,7 @@
   "Ingest a session into the shared graph via datomic.transact (tx_edn = the
   session datoms as EDN). Requires the operator JWT. Returns the response map."
   [{:keys [client base graph token]} m]
-  (xrpc-post client base "com.etzhayyim.apps.kotoba.datomic.transact"
+  (xrpc-post client base "org.kotoba-lang.datomic.transact"
              {:graph graph :tx_edn (pr-str (session-tx-data m))} token))
 
 (defn- q-rows
@@ -167,7 +167,7 @@
   time-travel via datomic.q `as_of`)."
   ([kg query inputs] (q-rows kg query inputs nil))
   ([{:keys [client base graph token]} query inputs {:keys [as-of]}]
-   (->> (xrpc-post client base "com.etzhayyim.apps.kotoba.datomic.q"
+   (->> (xrpc-post client base "org.kotoba-lang.datomic.q"
                    (cond-> {:graph graph :query_edn (pr-str query) :inputs_edn (mapv pr-str inputs)}
                      as-of (assoc :as_of (str as-of)))
                    token)

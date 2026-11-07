@@ -37,7 +37,7 @@
         srv (HttpServer/create (InetSocketAddress. "127.0.0.1" 0) 0)
         b64 (Base64/getDecoder)
         enc (Base64/getEncoder)]
-    (.createContext srv "/xrpc/com.etzhayyim.apps.kotoba.block.put"
+    (.createContext srv "/xrpc/org.kotoba-lang.block.put"
       (reify HttpHandler
         (handle [_ exch]
           (reset! auth (.getFirst (.getRequestHeaders exch) "Authorization"))
@@ -46,7 +46,7 @@
                 cid (str "b" (sha bytes))]
             (swap! blocks assoc cid bytes)
             (respond exch (json/write-str {:cid cid}))))))
-    (.createContext srv "/xrpc/com.etzhayyim.apps.kotoba.block.get"
+    (.createContext srv "/xrpc/org.kotoba-lang.block.get"
       (reify HttpHandler
         (handle [_ exch]
           (let [cid (get (query->map (.getQuery (.getRequestURI exch))) "cid")

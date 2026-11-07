@@ -110,8 +110,8 @@
 (defn local-cas [dir] (->LocalCas dir))
 
 ;; --- KotobaHttp: the real distributed store over Kotoba's block XRPC ---------
-;;   PUT  POST /xrpc/com.etzhayyim.apps.kotoba.block.put  {data_b64} -> {cid}
-;;   GET  GET  /xrpc/com.etzhayyim.apps.kotoba.block.get?cid=.. -> {cid,data_b64}
+;;   PUT  POST /xrpc/org.kotoba-lang.block.put  {data_b64} -> {cid}
+;;   GET  GET  /xrpc/org.kotoba-lang.block.get?cid=.. -> {cid,data_b64}
 
 (def ^:private b64-enc (Base64/getEncoder))
 (def ^:private b64-dec (Base64/getDecoder))
@@ -142,11 +142,11 @@
 (defrecord KotobaHttp [^HttpClient client base token]
   Durable
   (put! [_ bytes]
-    (-> (http-post-json client (str base "/xrpc/com.etzhayyim.apps.kotoba.block.put")
+    (-> (http-post-json client (str base "/xrpc/org.kotoba-lang.block.put")
                         {:data_b64 (.encodeToString b64-enc bytes)} token)
         :cid))
   (fetch [_ cid]
-    (some-> (http-get-json client (str base "/xrpc/com.etzhayyim.apps.kotoba.block.get?cid=" cid) token)
+    (some-> (http-get-json client (str base "/xrpc/org.kotoba-lang.block.get?cid=" cid) token)
             :data_b64
             (->> (.decode b64-dec)))))
 

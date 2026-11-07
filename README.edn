@@ -3,6 +3,6 @@
  :repo/family "kami"
  :repo/role :game-application
  :repo/canonical-engine "kotoba-lang/kami-engine"
- :repo/compatibility-surfaces ["https://sip.etzhayyim.com"
-                               "com.etzhayyim.*"]
- :repo/serving-host "https://sip.itonami.app"}
+ :repo/compatibility-surfaces []
+ :repo/serving-host "https://sip.itonami.app"
+ :repo/xrpc-namespace "org.kotoba-lang.*"}
