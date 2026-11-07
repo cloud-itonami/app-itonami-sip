@@ -1,6 +1,6 @@
 (ns sip.session-test
   "Pure tests for the non-combat session FSM — the heart of the game. These run
-  with no GPU and no DB: `kbb -M:test`."
+  with no GPU and no DB: `kbb -M:kbb-test`."
   (:require [kotoba.test :refer [deftest is testing]]
             [sip.session :as s]))
 

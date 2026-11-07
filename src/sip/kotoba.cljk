@@ -55,7 +55,7 @@
 
 (defn- http-put! [base text]
   (let [out (a/chan 1)]
-    (-> (js/fetch (str base "/xrpc/com.etzhayyim.apps.kotoba.block.put")
+    (-> (js/fetch (str base "/xrpc/org.kotoba-lang.block.put")
                   (clj->js {:method "POST"
                             :headers {"content-type" "application/json"}
                             :body (js/JSON.stringify (clj->js {:data_b64 (utf8->b64 text)}))}))
@@ -66,7 +66,7 @@
 
 (defn- http-fetch [base cid]
   (let [out (a/chan 1)]
-    (-> (js/fetch (str base "/xrpc/com.etzhayyim.apps.kotoba.block.get?cid=" cid))
+    (-> (js/fetch (str base "/xrpc/org.kotoba-lang.block.get?cid=" cid))
         (.then (fn [r] (.json r)))
         (.then (fn [j] (when-let [b (.-data_b64 j)] (a/put! out (b64->utf8 b))) (a/close! out)))
         (.catch (fn [_] (a/close! out))))

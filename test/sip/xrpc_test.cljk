@@ -1,0 +1,33 @@
+(ns sip.xrpc-test
+  "Pure tests for the portable XRPC layer, over `kotoba.lang.http/mock-http`:
+  `kbb -M:kbb-test`."
+  (:require [kotoba.test :refer [deftest is testing]]
+            [kotoba.lang.http :as http]
+            [sip.xrpc :as x]))
+
+(defn- recording [seen reply]
+  (http/mock-http (fn [req] (swap! seen conj req) reply)))
+
+(deftest post-sends-json-and-bearer-token
+  (let [seen (atom [])
+        client (recording seen (http/response 200 {} "{\"cid\":\"bafy1\"}"))
+        out (x/xrpc-post client "http://h" "org.kotoba-lang.block.put" {:data_b64 "QQ=="} "tok")
+        req (first @seen)]
+    (is (= {:cid "bafy1"} out))
+    (is (= :post (:http/method req)))
+    (is (= "http://h/xrpc/org.kotoba-lang.block.put" (:http/url req)))
+    (is (= "Bearer tok" (http/header (:http/headers req) "authorization")))
+    (is (= "application/json" (http/header (:http/headers req) "content-type")))))
+
+(deftest no-token-no-authorization-header
+  (let [seen (atom [])
+        client (recording seen (http/response 200 {} "{}"))]
+    (x/get-json client "http://h/xrpc/org.kotoba-lang.block.get?cid=c" nil)
+    (is (nil? (http/header (:http/headers (first @seen)) "authorization")))
+    (is (= :get (:http/method (first @seen))))))
+
+(deftest non-2xx-is-nil
+  (testing "a failed call yields nil, never a decoded error body"
+    (let [client (recording (atom []) (http/response 500 {} "{\"error\":\"x\"}"))]
+      (is (nil? (x/post-json client "http://h/x" {} nil)))
+      (is (nil? (x/get-json client "http://h/x" nil))))))

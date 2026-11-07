@@ -8,41 +8,76 @@
 {:paths ["src" "resources"]
 
  :deps {
+        io.github.kotoba-lang/error
+        {:git/url "https://github.com/kotoba-lang/kotoba.git"
+         :git/sha "73e3c67a02221411c7685c43998df5d5d85e66f3"
+         :deps/root "lib/kotoba.error"}
+        ;; sip.xrpc: the host-injected IHttp protocol and request/response data model.
+        io.github.kotoba-lang/http
+        {:git/url "https://github.com/kotoba-lang/kotoba.git"
+         :git/sha "73e3c67a02221411c7685c43998df5d5d85e66f3"
+         :deps/root "lib/kotoba.http"}
         ;; kotoba.bytes replaced UTF-8 .getBytes / String. here (2026-09-24). An explicit
         ;; floor: tools.deps takes the NEWEST sha it is shown.
-        io.github.kotoba-lang/bytes {:git/sha "d5259f35ab7c4f5a66e63ca29ed4dcf7ba3f1ac5"}
+        io.github.kotoba-lang/bytes
+          {:git/url "https://github.com/kotoba-lang/kotoba.git"
+           :git/sha "73e3c67a02221411c7685c43998df5d5d85e66f3"
+           :deps/root "lib/kotoba.bytes"}
         ;; kotoba.io replaced clojure.java.io here (2026-09-24). An explicit floor:
         ;; kotoba.io carries clojure.java.io's file/as-file/as-relative-path/
         ;; make-parents/delete-file from 98045c7, and tools.deps takes the NEWEST
         ;; sha it is shown.
-        io.github.kotoba-lang/io {:git/sha "72dde04b4c32854d70d17a670b277f8f7957a784"}
+        io.github.kotoba-lang/io
+          {:git/url "https://github.com/kotoba-lang/kotoba.git"
+           :git/sha "73e3c67a02221411c7685c43998df5d5d85e66f3"
+           :deps/root "lib/kotoba.io"}
         ;; kotoba.lang.edn replaced clojure.edn here (2026-09-23). An explicit floor:
         ;; tools.deps takes the NEWEST sha it is shown, and kbb resolves git deps
         ;; only from nbb.edn, so every project file this repo has names it.
-        io.github.kotoba-lang/edn {:git/sha "79dba32c8892058842c57783f06a2dfe4601aeb0"}
+        io.github.kotoba-lang/edn
+          {:git/url "https://github.com/kotoba-lang/kotoba.git"
+           :git/sha "73e3c67a02221411c7685c43998df5d5d85e66f3"
+           :deps/root "lib/kotoba.edn"}
        ;; kotoba.test (clojure.test-compatible surface), not clojure.test --
         ;; scripts/migrate-clojure-test-to-kotoba-test.cljk. Explicit floor.
-        io.github.kotoba-lang/test {:git/url "https://github.com/kotoba-lang/test.git"
-                                    :git/sha "2ab4885f99fd25552d380d0f6b0b54c5a72eb7ae"}
+        io.github.kotoba-lang/test
+          {:git/url "https://github.com/kotoba-lang/kotoba.git"
+           :git/sha "73e3c67a02221411c7685c43998df5d5d85e66f3"
+           :deps/root "lib/kotoba.test"}
         ;; kotoba.lang.text, not clojure.string. Pinned as an explicit floor:
         ;; tools.deps takes the NEWEST sha it is shown, so without a floor here
         ;; this repo silently rides whatever a sibling happens to name.
-        io.github.kotoba-lang/text {:git/sha "73bdb13ae7a3d004b44bca08be03a3191157a38f"}
+        io.github.kotoba-lang/text
+          {:git/url "https://github.com/kotoba-lang/kotoba.git"
+           :git/sha "73e3c67a02221411c7685c43998df5d5d85e66f3"
+           :deps/root "lib/kotoba.text"}
        org.clojure/clojure       {:mvn/version "1.12.0"}
 
-        io.github.kotoba-lang/json {:git/sha "b47b06486b3ad53051bc7d8bf361f4176f467202"}      ; read story-bible JSON-LD
+        io.github.kotoba-lang/json
+
+          {:git/url "https://github.com/kotoba-lang/kotoba.git"
+
+           :git/sha "73e3c67a02221411c7685c43998df5d5d85e66f3"
+
+           :deps/root "lib/kotoba.json"}      ; read story-bible JSON-LD
         ;; The engine SDK: scene/ecs/sim/db/render-IR contract over kami-render.
         ;; (was kami-engine-sdk-clj; renamed — ADR-2607102200 addendum 1)
-        gftd/kami-engine-sdk     {:git/url "https://github.com/kotoba-lang/kami-engine-sdk.git"
-                                  :sha "a3824ff59abcc1c87d76d291be7ed573412bc99c"}
+        gftd/kami-engine-sdk
+          {:git/url "https://github.com/kotoba-lang/kotoba.git"
+           :git/sha "73e3c67a02221411c7685c43998df5d5d85e66f3"
+           :deps/root "lib/kotoba.kamiEngineSdk"}
         ;; Work-agnostic 2D manga render commons (ADR-2606282100): STYLE-FIRST
         ;; CLIP-77 compose + image-gen client. sip.render injects work mappers.
-        gftd/kami-mangaka-render {:git/url "https://github.com/kotoba-lang/kami-mangaka-render.git"
-                                  :sha "3777d04d88071ab118f0623553a3ecfe52e33d26"}
+        gftd/kami-mangaka-render
+          {:git/url "https://github.com/kotoba-lang/kotoba.git"
+           :git/sha "73e3c67a02221411c7685c43998df5d5d85e66f3"
+           :deps/root "lib/kotoba.kamiMangakaRender"}
         ;; Work-agnostic graphic-novel page composition (komawari + Java2D DTP).
         ;; sip.page wires sip.storyboard into page/compose-page!.
-        gftd/kami-mangaka-page   {:git/url "https://github.com/kotoba-lang/kami-mangaka-page.git"
-                                  :sha "45850ce9fb8915e55f602c94b44dd05fa0eca01e"}}
+        gftd/kami-mangaka-page
+          {:git/url "https://github.com/kotoba-lang/kotoba.git"
+           :git/sha "73e3c67a02221411c7685c43998df5d5d85e66f3"
+           :deps/root "lib/kotoba.kamiMangakaPage"}}
 
  :aliases
  {;; ----- JVM authoring: build the water-city world → datalevin → snapshot ----
@@ -76,6 +111,11 @@
   ;; ----- Pure logic tests (no GPU, no DB): session FSM, kokoro, awakening -----
   ;; sip.store-test needs a real datalevin store -- run the full suite with
   ;; `kbb -M:datomic:test` (sip.store-test's own docstring says so too).
+  ;; kbb runs the .cljk tests (the cognitect runner below cannot read .cljk):
+  ;;   kbb -M:kbb-test
+  :kbb-test  {:extra-paths ["test"]
+              :main-opts   ["-m" "sip.all-test"]}
+
   :test      {:extra-paths ["test"]
               :extra-deps  {io.github.cognitect-labs/test-runner
                             {:git/tag "v0.5.1" :git/sha "dfb30dd6605cb6c0efc275e1df1736f6e90d4d73"}}

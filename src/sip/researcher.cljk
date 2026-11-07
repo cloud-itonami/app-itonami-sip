@@ -53,7 +53,7 @@
   ;; is the P2 follow-up; until the schema is fixed we only probe reachability
   ;; and otherwise return nil so the caller falls back to seed.
   (let [out (a/chan 1)]
-    (-> (js/fetch (str base "/xrpc/com.etzhayyim.apps.kotoba.datomic.q")
+    (-> (js/fetch (str base "/xrpc/org.kotoba-lang.datomic.q")
                   (clj->js {:method "POST" :headers {"content-type" "application/json"}
                             :body (js/JSON.stringify (clj->js {:query "[:find ?p :where [?p :sip.participant/id]]"}))}))
         (.then (fn [r] (if (.-ok r) (.json r) (throw (js/Error. "q failed")))))

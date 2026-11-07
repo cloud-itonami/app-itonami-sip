@@ -23,9 +23,9 @@ ADR-0022 P2（durable / 非毒性・非同期マルチプレイ）の残作業�
 CAS は列挙できない（store.clj の設計どおり「world が索引・Kotoba が内容」）。共有版では **world（索引）も Kotoba 側の共有 Datomic に置く**。`kotoba-server` は Datomic XRPC を持つ:
 
 ```
-com.etzhayyim.apps.kotoba.datomic.transact   ; :sip.letter datom を投入（要 operator JWT）
-com.etzhayyim.apps.kotoba.datomic.q          ; season で列挙（read; CACAO read-cap の要否は要確認）
-com.etzhayyim.apps.kotoba.datomic.pull
+org.kotoba-lang.datomic.transact   ; :sip.letter datom を投入（要 operator JWT）
+org.kotoba-lang.datomic.q          ; season で列挙（read; CACAO read-cap の要否は要確認）
+org.kotoba-lang.datomic.pull
 ```
 
 - **post-letter!**: `block.put`（本体→CID）→ `datomic.transact` で `{:sip.letter/cid :from :text :season}` を共有 Datomic に追記。
