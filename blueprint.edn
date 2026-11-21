@@ -1,0 +1,7 @@
+{:itonami.blueprint/id "sip"
+ :itonami.blueprint/name "sip — Spirit in Physics game"
+ ;; One classification key (itonami-lib blueprint.edn schema), chosen from
+ ;; README.md for the registry catalog (JUN-1439): isic-rev5 5821, checked against
+ ;; the ISIC Rev.5 structure table in cloud-itonami/app-itonami-org-un-isic.
+ :itonami.blueprint/isic-rev5 "5821"
+ :itonami.blueprint/domain :games/sip}
